@@ -72,6 +72,7 @@ class FairShareApp {
       if (!r.ok) return;
       const d = await r.json();
       this.aiEnabled = d.ai_extraction;
+      this.aiModel = d.model || 'Gemini';
       this._renderAIBadge();
     } catch (_) {
       this.aiEnabled = false;
@@ -82,10 +83,12 @@ class FairShareApp {
   _renderAIBadge() {
     const badge = document.getElementById('aiBadge');
     const text  = document.getElementById('aiBadgeText');
+    const model = document.getElementById('aiModelName');
     if (!badge || !text) return;
     if (this.aiEnabled) {
       badge.className = 'ai-badge active';
-      text.textContent = 'Powered by Gemini 3.7 Flash — AI extraction active';
+      text.textContent = `Powered by ${this.aiModel || 'Gemini'} — AI extraction active`;
+      if (model) model.textContent = this.aiModel || 'Gemini';
     } else {
       badge.className = 'ai-badge inactive';
       text.textContent = 'No API key — manual entry only';
@@ -352,6 +355,18 @@ class FairShareApp {
   // ─── STEP 1 render ───────────────────────────────────
   _renderStep1() {
     const b = this.bill;
+
+    const extractionNotice = document.getElementById('extractionNotice');
+    const extractionNoticeText = document.getElementById('extractionNoticeText');
+    if (extractionNotice && extractionNoticeText) {
+      if (b.extraction_warning) {
+        extractionNoticeText.textContent = b.extraction_warning;
+        extractionNotice.style.display = 'flex';
+      } else {
+        extractionNotice.style.display = 'none';
+        extractionNoticeText.textContent = '';
+      }
+    }
 
     // Image preview panel
     const panel = document.getElementById('imagePanel');
