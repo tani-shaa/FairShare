@@ -38,6 +38,7 @@ from backend.engine import (
     UnconfirmedBillException,
 )
 from backend.extraction import extract_bill_from_image_bytes
+from backend.extraction import GEMINI_MODEL
 
 app = FastAPI(
     title="Smart Bill Splitter (FairShare) API",
@@ -72,8 +73,8 @@ def api_status():
     ai_enabled = bool(key and key != "your_gemini_api_key_here")
     return {
         "ai_extraction": ai_enabled,
-        "model": "gemini-2.0-flash-exp (optimized for speed)" if ai_enabled else None,
-        "message": "Gemini 2.0 Flash Exp - Optimized for fast extraction" if ai_enabled else "No API key — manual entry mode only",
+        "model": GEMINI_MODEL if ai_enabled else None,
+        "message": f"{GEMINI_MODEL} - Image extraction active" if ai_enabled else "No API key — manual entry only",
         "average_response_time": "3-8 seconds" if ai_enabled else "N/A"
     }
 
