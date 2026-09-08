@@ -164,15 +164,9 @@ def _optimize_image_for_api(image_bytes: bytes, mime_type: str) -> bytes:
 
 def _call_gemini_vision(image_bytes: bytes, mime_type: str, api_key: str) -> BillData:
     """Calls Gemini Multimodal API to parse receipt image.
-    
-    Uses Google's current google-genai SDK. The API key stays server-side;
-    the browser only uploads the image.
-    
-    PERFORMANCE OPTIMIZATIONS:
-    - Uses a configurable current multimodal model
-    - Lower temperature (0.05) for faster convergence
-    - Strict JSON mode for faster parsing
-    - Request timeout handling
+
+    Tries GEMINI_MODEL first, then falls through a list of fallback models
+    if the primary is unavailable (503) or deprecated (404).
     """
     try:
         from google import genai
@@ -188,43 +182,64 @@ def _call_gemini_vision(image_bytes: bytes, mime_type: str, api_key: str) -> Bil
         http_options=types.HttpOptions(timeout=30_000),
     )
 
-    # Build the multimodal prompt: text instruction + image bytes
     image_part = types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg")
-    
-    # Generate with timeout
-    logger.info("Calling Gemini Vision API...")
-    start_time = __import__('time').time()
-    
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=[EXTRACTION_SYSTEM_PROMPT, image_part],
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            temperature=0.05,
-            top_p=0.95,
-            top_k=40,
-            max_output_tokens=2048,
-        ),
+
+    # Try the configured model first, then fallbacks in order
+    models_to_try = [GEMINI_MODEL] + [
+        m for m in [
+            "gemini-3.5-flash",
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-flash-latest",
+        ] if m != GEMINI_MODEL
+    ]
+
+    last_error: Optional[Exception] = None
+    for model_name in models_to_try:
+        try:
+            logger.info(f"Calling Gemini Vision API with model: {model_name}")
+            start_time = __import__('time').time()
+
+            response = client.models.generate_content(
+                model=model_name,
+                contents=[EXTRACTION_SYSTEM_PROMPT, image_part],
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    temperature=0.05,
+                    top_p=0.95,
+                    top_k=40,
+                    max_output_tokens=2048,
+                ),
+            )
+
+            elapsed = __import__('time').time() - start_time
+            logger.info(f"Gemini [{model_name}] responded in {elapsed:.2f}s")
+
+            parsed_json = json.loads(response.text)
+            bill = BillData(**parsed_json)
+
+            # Identify low confidence fields (PROBLEM 1)
+            low_conf = []
+            for item in bill.items:
+                if item.confidence < 0.75:
+                    low_conf.append(f"Item '{item.name}' (Confidence: {int(item.confidence * 100)}%)")
+            if bill.taxes.confidence < 0.75:
+                low_conf.append("Taxes Breakdown (Low Confidence)")
+
+            bill.low_confidence_fields = low_conf
+            return validate_bill_math(bill)
+
+        except Exception as e:
+            err_str = str(e)
+            if any(code in err_str for code in ["503", "UNAVAILABLE", "404", "NOT_FOUND"]):
+                logger.warning(f"Model {model_name} unavailable ({err_str[:80]}), trying next...")
+                last_error = e
+                continue
+            raise  # Auth errors, bad JSON, etc. — don't retry
+
+    raise RuntimeError(
+        f"All Gemini models are currently unavailable. Last error: {last_error}"
     )
-    
-    elapsed = __import__('time').time() - start_time
-    logger.info(f"Gemini API responded in {elapsed:.2f}s")
-
-    parsed_json = json.loads(response.text)
-
-    # Construct and validate BillData
-    bill = BillData(**parsed_json)
-
-    # Identify low confidence fields (PROBLEM 1)
-    low_conf = []
-    for item in bill.items:
-        if item.confidence < 0.75:
-            low_conf.append(f"Item '{item.name}' (Confidence: {int(item.confidence * 100)}%)")
-    if bill.taxes.confidence < 0.75:
-        low_conf.append("Taxes Breakdown (Low Confidence)")
-
-    bill.low_confidence_fields = low_conf
-    return validate_bill_math(bill)
 
 
 def _heuristic_fallback_extraction(

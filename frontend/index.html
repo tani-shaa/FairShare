@@ -275,10 +275,16 @@
       <div id="aiExtractionBanner" class="alert alert-ai mb-16" style="display:none">
         <span class="alert-icon">✦</span>
         <div>
-          <strong>Extracted by Gemini 2.5 Flash</strong>
+          <strong>Extracted by Gemini Vision AI</strong>
           <span id="aiConfidenceText"> · Overall confidence: —</span>
           <span class="ai-banner-note"> Review and correct anything that looks wrong before confirming.</span>
         </div>
+      </div>
+
+      <!-- Extraction warning / fallback notice -->
+      <div id="extractionNotice" class="alert alert-error mb-16" style="display:none">
+        <span>&#9888;</span>
+        <span id="extractionNoticeText"></span>
       </div>
 
       <!-- Bill editor card -->
