@@ -119,6 +119,14 @@ class BillData(BaseModel):
     # Confidence metrics
     overall_confidence: float = Field(default=1.0, ge=0.0, le=1.0)
     low_confidence_fields: List[str] = Field(default_factory=list)
+    extraction_source: str = Field(
+        default="manual",
+        description="How the bill was populated: vision, fallback, sample, or manual",
+    )
+    extraction_warning: Optional[str] = Field(
+        default=None,
+        description="Actionable message when vision extraction was unavailable",
+    )
     
     # PROBLEM 2: Mathematical discrepancy detection
     calculated_total: float = Field(default=0.0, description="Computed: items_subtotal + taxes + SC + tip - discount +/- round_off")
