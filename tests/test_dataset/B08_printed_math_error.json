@@ -1,0 +1,49 @@
+{
+  "test_id": "B08",
+  "title": "Receipt with Printed Arithmetic Error (PROBLEM 2 Test)",
+  "condition": "math_error_on_bill",
+  "description": "The cash register printed a total of ₹980.00, but the line items + 5% GST + 10% Service Charge - ₹50 discount calculate to ₹1,019.50.",
+  "restaurant_name": "Cornerstone Bar & Kitchen",
+  "bill_number": "CB-1049",
+  "date": "2026-09-03",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Hyderabadi Chicken Biryani",
+      "quantity": 1.0,
+      "unit_price": 350.0,
+      "total_price": 350.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Paneer Tikka (6 pcs)",
+      "quantity": 1.0,
+      "unit_price": 280.0,
+      "total_price": 280.0,
+      "confidence": 0.92
+    },
+    {
+      "name": "Virgin Mojito (Mint)",
+      "quantity": 2.0,
+      "unit_price": 150.0,
+      "total_price": 300.0,
+      "confidence": 0.96
+    }
+  ],
+  "subtotal": 930.0,
+  "taxes": {
+    "cgst": 23.25,
+    "sgst": 23.25,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 46.5,
+    "confidence": 0.95
+  },
+  "service_charge": 93.0,
+  "discount": 50.0,
+  "tip": 0.0,
+  "round_off": 0.0,
+  "printed_total": 980.0,
+  "overall_confidence": 0.93,
+  "image_path": "tests/test_dataset/images/B08.jpg"
+}

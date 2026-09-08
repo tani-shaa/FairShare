@@ -1,0 +1,105 @@
+{
+  "test_id": "B07",
+  "title": "Long Multi-Photo Stitched Receipt",
+  "condition": "multi_photo_stitched",
+  "description": "A long banquet receipt requiring 2 sequential photos, stitched and de-duplicated.",
+  "restaurant_name": "Royal Feast Banquets & Restaurant",
+  "bill_number": "RF-9902",
+  "date": "2026-08-30",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Sweet Corn Veg Soup",
+      "quantity": 3.0,
+      "unit_price": 140.0,
+      "total_price": 420.0,
+      "confidence": 0.91
+    },
+    {
+      "name": "Manchow Chicken Soup",
+      "quantity": 2.0,
+      "unit_price": 160.0,
+      "total_price": 320.0,
+      "confidence": 0.89
+    },
+    {
+      "name": "Hara Bhara Kebab",
+      "quantity": 2.0,
+      "unit_price": 260.0,
+      "total_price": 520.0,
+      "confidence": 0.93
+    },
+    {
+      "name": "Chicken Malai Tikka",
+      "quantity": 2.0,
+      "unit_price": 380.0,
+      "total_price": 760.0,
+      "confidence": 0.9
+    },
+    {
+      "name": "Paneer Lababdar",
+      "quantity": 2.0,
+      "unit_price": 340.0,
+      "total_price": 680.0,
+      "confidence": 0.87
+    },
+    {
+      "name": "Mutton Rogan Josh",
+      "quantity": 1.0,
+      "unit_price": 520.0,
+      "total_price": 520.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Garlic Butter Naan",
+      "quantity": 8.0,
+      "unit_price": 55.0,
+      "total_price": 440.0,
+      "confidence": 0.88
+    },
+    {
+      "name": "Dum Chicken Biryani",
+      "quantity": 2.0,
+      "unit_price": 420.0,
+      "total_price": 840.0,
+      "confidence": 0.95
+    },
+    {
+      "name": "Jeera Rice Bowl",
+      "quantity": 2.0,
+      "unit_price": 180.0,
+      "total_price": 360.0,
+      "confidence": 0.86
+    },
+    {
+      "name": "Fresh Lime Soda",
+      "quantity": 4.0,
+      "unit_price": 80.0,
+      "total_price": 320.0,
+      "confidence": 0.92
+    },
+    {
+      "name": "Sizzling Brownie with Ice Cream",
+      "quantity": 3.0,
+      "unit_price": 210.0,
+      "total_price": 630.0,
+      "confidence": 0.91
+    }
+  ],
+  "subtotal": 5810.0,
+  "taxes": {
+    "cgst": 145.25,
+    "sgst": 145.25,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 290.5,
+    "confidence": 0.94
+  },
+  "service_charge": 581.0,
+  "discount": 500.0,
+  "tip": 0.0,
+  "round_off": 0.5,
+  "printed_total": 6182.0,
+  "overall_confidence": 0.91,
+  "image_path": "tests/test_dataset/images/B07.jpg"
+}

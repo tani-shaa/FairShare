@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FairShare — Split bills fairly</title>
+  <meta name="description" content="Photograph a restaurant bill, say who ate what, get the exact amount each person owes — taxes split proportionally, not divided by headcount.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     GLOBAL NAV (hidden on landing, shown on app views)
+     ============================================================ -->
+<nav class="app-nav" id="appNav" style="display:none">
+  <button class="nav-logo" onclick="app.goToLanding()">
+    <span class="nav-logo-icon">🧾</span>
+    <span>FairShare</span>
+  </button>
+
+  <div class="nav-steps" id="navSteps">
+    <div class="nav-step" id="ns1" data-step="1">
+      <span class="ns-num">1</span><span class="ns-label">Review</span>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-step" id="ns2" data-step="2">
+      <span class="ns-num">2</span><span class="ns-label">Assign</span>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-step" id="ns3" data-step="3">
+      <span class="ns-num">3</span><span class="ns-label">Settle</span>
+    </div>
+  </div>
+
+  <select id="sampleSelect" class="nav-sample-select" onchange="app.loadSample(this.value)">
+    <option value="">Load sample…</option>
+  </select>
+</nav>
+
+
+<!-- ============================================================
+     VIEW 0 — LANDING PAGE
+     ============================================================ -->
+<div id="view0" class="view active landing-view">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">✦ Fair splits, every time</div>
+
+      <h1 class="hero-title">
+        Stop doing the<br>
+        <span class="hero-accent">dinner bill maths</span><br>
+        in your head.
+      </h1>
+
+      <p class="hero-sub">
+        Photograph the bill, tell it who ate what, and get the exact number
+        each person owes — taxes and service charge split by consumption,
+        not divided equally.
+      </p>
+
+      <div class="hero-cta-row">
+        <button class="btn btn-hero" onclick="app.goToUpload()">
+          Upload a bill photo
+          <span class="btn-arrow">→</span>
+        </button>
+        <button class="btn btn-hero-ghost" onclick="app.loadSampleAndGo('B11')">
+          Try a demo
+        </button>
+      </div>
+
+      <p class="hero-note">No sign-up · Works offline · Open source</p>
+    </div>
+
+    <!-- Decorative receipt mockup -->
+    <div class="hero-receipt" aria-hidden="true">
+      <div class="receipt-card">
+        <div class="receipt-header">
+          <span class="receipt-name">The Social Table</span>
+          <span class="receipt-date">Table for 7</span>
+        </div>
+        <div class="receipt-items">
+          <div class="receipt-row"><span>Dum Biryani</span><span>₹600</span></div>
+          <div class="receipt-row"><span>Diet Coke</span><span>₹60</span></div>
+          <div class="receipt-row"><span>Butter Chicken</span><span>₹540</span></div>
+          <div class="receipt-row"><span>Grilled Fish</span><span>₹560</span></div>
+          <div class="receipt-row muted"><span>+ 3 more items</span><span></span></div>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-row"><span>Service (10%)</span><span>₹274</span></div>
+        <div class="receipt-row"><span>GST (5%)</span><span>₹137</span></div>
+        <div class="receipt-total"><span>Total</span><span>₹3,151</span></div>
+
+        <!-- Person badges overlaid -->
+        <div class="receipt-badges">
+          <div class="rbadge" style="background:#6366f1">A <span>₹634</span></div>
+          <div class="rbadge" style="background:#ec4899">B <span>₹634</span></div>
+          <div class="rbadge" style="background:#10b981">C <span>₹115</span></div>
+          <div class="rbadge" style="background:#f59e0b">D <span>₹368</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-section">
+    <div class="how-inner">
+      <div class="how-label">How it works</div>
+      <h2 class="how-title">Three steps, exact result.</h2>
+
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-icon">📷</div>
+          <div>
+            <h3>Upload the bill</h3>
+            <p>Photo, drag-and-drop, or type it in. AI extracts every line item with a confidence score so you can fix what it missed.</p>
+          </div>
+        </div>
+        <div class="how-connector" aria-hidden="true">→</div>
+        <div class="how-step">
+          <div class="how-icon">👥</div>
+          <div>
+            <h3>Assign who had what</h3>
+            <p>Tap the people who shared each item. One person, several, or everyone — partial fractions handled automatically.</p>
+          </div>
+        </div>
+        <div class="how-connector" aria-hidden="true">→</div>
+        <div class="how-step">
+          <div class="how-icon">✓</div>
+          <div>
+            <h3>Get exact amounts</h3>
+            <p>Tax and service charge distribute by what each person ate, not headcount. Rounding is reconciled to the last paisa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature grid -->
+  <section class="features-section">
+    <div class="features-inner">
+      <div class="feature-card">
+        <div class="feature-icon">⚠️</div>
+        <h3>Catches bill errors</h3>
+        <p>If the printed total doesn't match the arithmetic, we flag it — and let you choose which to trust.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚖️</div>
+        <h3>Proportional tax</h3>
+        <p>Someone who only had a Coke shouldn't pay the same service charge as the person who ordered a ₹600 biryani.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Confidence scoring</h3>
+        <p>Every AI-extracted field gets a confidence score. Low-confidence items are highlighted for human review before any maths runs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Zero rounding drift</h3>
+        <p>Individual totals always add up to the bill total exactly — fractional paise distributed deterministically.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="landing-footer-cta">
+    <button class="btn btn-hero" onclick="app.goToUpload()">
+      Split your next bill →
+    </button>
+  </section>
+
+</div><!-- /view0 -->
+
+
+<!-- ============================================================
+     VIEW: UPLOAD
+     ============================================================ -->
+<div id="viewUpload" class="view app-view">
+  <div class="page-wrap">
+
+    <div class="upload-page-header">
+      <h2>Upload your bill</h2>
+      <p>A photo, a scan, or type it in — your choice.</p>
+    </div>
+
+    <!-- Gemini AI badge -->
+    <div class="ai-badge-row">
+      <div class="ai-badge" id="aiBadge">
+        <span class="ai-badge-dot"></span>
+        <span id="aiBadgeText">Checking AI status…</span>
+      </div>
+    </div>
+
+    <div class="upload-zone-large" id="dropzone">
+      <input type="file" id="fileInput" accept="image/*" onchange="app.handleFile(event)">
+      <div class="upload-icon-large">📷</div>
+      <h3>Drop your bill photo here</h3>
+      <p>JPEG, PNG, HEIC — up to 20 MB</p>
+      <span class="upload-or">or</span>
+      <button class="btn btn-primary upload-browse-btn">Browse files</button>
+    </div>
+
+    <div class="upload-alts">
+      <button class="alt-btn" onclick="app.clearBill()">
+        <span class="alt-icon">✏️</span>
+        <span>
+          <strong>Enter manually</strong>
+          <span>Type in items yourself</span>
+        </span>
+      </button>
+
+      <div class="alt-divider">or try a sample</div>
+
+      <div class="sample-chips" id="sampleChips"></div>
+    </div>
+
+  </div>
+</div><!-- /viewUpload -->
+
+
+<!-- ============================================================
+     VIEW 1 — REVIEW BILL
+     ============================================================ -->
+<div id="view1" class="view app-view">
+  <div class="review-layout">
+
+    <!-- LEFT: uploaded image panel -->
+    <div class="image-panel" id="imagePanel" style="display:none">
+      <div class="image-panel-header">
+        <span class="section-label" style="margin:0">Bill photo</span>
+        <button class="link-btn" onclick="app.goToUpload()">Replace ↗</button>
+      </div>
+      <div class="image-panel-body">
+        <img id="billPreviewImg" src="" alt="Uploaded bill" class="bill-preview-img">
+      </div>
+    </div>
+
+    <!-- RIGHT: editor -->
+    <div class="editor-col">
+
+      <!-- Math discrepancy alert (Problem 2) -->
+      <div id="mathAlert" class="alert alert-warning mb-16" style="display:none">
+        <span class="alert-icon">⚠️</span>
+        <div>
+          <strong>Printed total doesn't match the calculated total</strong>
+          <div class="discrepancy-row">
+            <div class="disc-item">
+              <span class="disc-label">Printed on receipt</span>
+              <span class="disc-val" id="dPrinted">₹0</span>
+            </div>
+            <div class="disc-item">
+              <span class="disc-label">Calculated</span>
+              <span class="disc-val" id="dCalc">₹0</span>
+            </div>
+            <div class="disc-item">
+              <span class="disc-label">Difference</span>
+              <span class="disc-val" id="dDiff">₹0</span>
+            </div>
+          </div>
+          <div class="radio-group">
+            <label><input type="radio" name="target" value="calculated" checked onchange="app.setTarget('calculated')"> Use calculated total</label>
+            <label><input type="radio" name="target" value="printed"    onchange="app.setTarget('printed')"> Use printed total</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Low-confidence alert (Problem 1) -->
+      <div id="confAlert" class="alert alert-info mb-16" style="display:none">
+        <span class="alert-icon">🔍</span>
+        <div><strong id="confAlertText">Some fields have low confidence — review before confirming</strong></div>
+      </div>
+
+      <!-- AI extraction info banner -->
+      <div id="aiExtractionBanner" class="alert alert-ai mb-16" style="display:none">
+        <span class="alert-icon">✦</span>
+        <div>
+          <strong>Extracted by Gemini 2.5 Flash</strong>
+          <span id="aiConfidenceText"> · Overall confidence: —</span>
+          <span class="ai-banner-note"> Review and correct anything that looks wrong before confirming.</span>
+        </div>
+      </div>
+
+      <!-- Bill editor card -->
+      <div class="card">
+        <div class="card-body">
+
+          <div class="meta-row">
+            <input type="text" id="rName"     placeholder="Restaurant name" style="flex:2" oninput="app.updateMeta()">
+            <input type="text" id="rInvoice"  placeholder="Invoice #"       oninput="app.updateMeta()">
+            <input type="text" id="rCurrency" value="₹" class="sm"          oninput="app.updateMeta()">
+          </div>
+
+          <div class="section-label">Line items</div>
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th style="width:40%">Item</th>
+                <th class="center" style="width:8%">Qty</th>
+                <th class="right"  style="width:14%">Unit price</th>
+                <th class="right"  style="width:14%">Total</th>
+                <th class="center" style="width:14%">Confidence</th>
+                <th style="width:4%"></th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+          </table>
+          <div class="mt-16">
+            <button class="btn btn-ghost btn-sm" onclick="app.addItem()">+ Add item</button>
+          </div>
+
+          <!-- Financial fields -->
+          <div class="totals-grid">
+            <div>
+              <div class="section-label">Taxes</div>
+              <div class="fin-row">
+                <div class="fin-group">
+                  <label>CGST</label>
+                  <input type="number" step="0.01" id="tCGST"  class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>SGST</label>
+                  <input type="number" step="0.01" id="tSGST"  class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>VAT</label>
+                  <input type="number" step="0.01" id="tVAT"   class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>Other</label>
+                  <input type="number" step="0.01" id="tOther" class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>Total tax</label>
+                  <input type="number" step="0.01" id="tTotal" class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="section-label">Charges &amp; totals</div>
+              <div class="fin-row">
+                <div class="fin-group">
+                  <label>Service charge</label>
+                  <input type="number" step="0.01" id="fSC"       class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>Discount</label>
+                  <input type="number" step="0.01" id="fDisc"     class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>Tip</label>
+                  <input type="number" step="0.01" id="fTip"      class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group">
+                  <label>Round off</label>
+                  <input type="number" step="0.01" id="fRoundOff" class="fin-input" value="0.00" oninput="app.updateFin()">
+                </div>
+              </div>
+              <div class="fin-row" style="margin-top:12px">
+                <div class="fin-group" style="flex:1">
+                  <label>Printed total</label>
+                  <input type="number" step="0.01" id="fPrinted" class="fin-input total" value="0.00" oninput="app.updateFin()">
+                </div>
+                <div class="fin-group" style="flex:1">
+                  <label>Calculated</label>
+                  <div class="calc-total-display" id="calcDisplay">₹0.00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /card-body -->
+        <div class="card-footer">
+          <button class="btn btn-ghost" onclick="app.goToUpload()">← Back</button>
+          <button class="btn btn-primary" onclick="app.confirm()">Confirm &amp; assign people →</button>
+        </div>
+      </div><!-- /card -->
+
+    </div><!-- /editor-col -->
+  </div><!-- /review-layout -->
+</div><!-- /view1 -->
+
+
+<!-- ============================================================
+     VIEW 2 — ASSIGN PEOPLE
+     ============================================================ -->
+<div id="view2" class="view app-view">
+  <div class="page-wrap">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="section-label">People sharing this bill</div>
+        <div class="members-bar" id="membersBar"></div>
+
+        <div class="add-member-row">
+          <input type="text" id="newName" placeholder="Add a name…" onkeydown="if(event.key==='Enter')app.addMember()">
+          <button class="btn btn-ghost btn-sm" onclick="app.addMember()">+ Add</button>
+        </div>
+
+        <div id="unassignBanner" class="unassigned-banner" style="display:none">
+          <span>⚠️</span>
+          <span id="unassignText">Some items aren't assigned yet.</span>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="app.assignAll()">Assign all to everyone</button>
+        </div>
+
+        <div class="section-label">Who had what?</div>
+        <div id="assignList"></div>
+
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-ghost"   onclick="app.goToStep(1)">← Back</button>
+        <button class="btn btn-primary" id="calcBtn" onclick="app.calculate()">Calculate →</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /view2 -->
+
+
+<!-- ============================================================
+     VIEW 3 — SETTLEMENT
+     ============================================================ -->
+<div id="view3" class="view app-view">
+  <div class="page-wrap">
+
+    <div class="totals-strip" id="totalsStrip"></div>
+
+    <div class="zero-loss-badge" id="zeroLossBadge">
+      <span class="check">✓</span>
+      <span id="zeroLossText">All individual shares add up exactly.</span>
+    </div>
+
+    <div class="member-cards" id="memberCards"></div>
+
+    <div class="export-bar">
+      <button class="btn btn-primary" onclick="app.goToStep(2)">✏️ Edit split</button>
+      <button class="btn btn-green"  onclick="app.copyWhatsApp()">Copy WhatsApp summary</button>
+      <button class="btn btn-ghost"  onclick="window.print()">Print / PDF</button>
+      <button class="btn btn-ghost"  onclick="app.goToLanding()">Start over</button>
+      <span class="toast" id="toast" style="display:none">✓ Copied to clipboard</span>
+    </div>
+
+  </div>
+</div><!-- /view3 -->
+
+
+<script src="app.js"></script>
+
+<!-- Processing overlay — shown while Gemini extracts the bill -->
+<div id="processingOverlay" class="processing-overlay" style="display:none">
+  <div class="processing-card">
+    <div class="processing-spinner"></div>
+    <div class="processing-model">Gemini 3.7 Flash</div>
+    <h3 class="processing-title">Reading your bill…</h3>
+    <p class="processing-sub">Extracting line items, prices and taxes from the photo</p>
+    <div class="processing-steps">
+      <div class="ps-step active" id="ps1">Analysing image</div>
+      <div class="ps-step" id="ps2">Extracting items</div>
+      <div class="ps-step" id="ps3">Scoring confidence</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "test_id": "B09",
+  "title": "Heavy Promotional Discount Receipt",
+  "condition": "promotional_discounts",
+  "description": "Bill with heavy 20% flat dining discount and loyalty voucher applied before taxes.",
+  "restaurant_name": "Flame & Grill BBQ",
+  "bill_number": "FG-5519",
+  "date": "2026-09-02",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Non-Veg BBQ Buffet",
+      "quantity": 3.0,
+      "unit_price": 899.0,
+      "total_price": 2697.0,
+      "confidence": 0.96
+    },
+    {
+      "name": "Unlimited Mocktails Pack",
+      "quantity": 3.0,
+      "unit_price": 199.0,
+      "total_price": 597.0,
+      "confidence": 0.94
+    }
+  ],
+  "subtotal": 3294.0,
+  "taxes": {
+    "cgst": 67.35,
+    "sgst": 67.35,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 134.7,
+    "confidence": 0.95
+  },
+  "service_charge": 164.7,
+  "discount": 600.0,
+  "tip": 0.0,
+  "round_off": 0.6,
+  "printed_total": 2994.0,
+  "overall_confidence": 0.95,
+  "image_path": "tests/test_dataset/images/B09.jpg"
+}

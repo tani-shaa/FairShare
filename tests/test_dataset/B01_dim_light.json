@@ -1,0 +1,56 @@
+{
+  "test_id": "B01",
+  "title": "Dim Light Restaurant Receipt",
+  "condition": "dim_light",
+  "description": "Warm ambient bar lighting (<20 lux) with shadow across bottom totals.",
+  "restaurant_name": "The Nocturne Lounge",
+  "bill_number": "NL-9021",
+  "date": "2026-09-06",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Craft IPA Beer (500ml)",
+      "quantity": 2.0,
+      "unit_price": 350.0,
+      "total_price": 700.0,
+      "confidence": 0.82
+    },
+    {
+      "name": "Peri Peri French Fries",
+      "quantity": 1.0,
+      "unit_price": 180.0,
+      "total_price": 180.0,
+      "confidence": 0.79
+    },
+    {
+      "name": "Chicken Tikka Platter",
+      "quantity": 1.0,
+      "unit_price": 420.0,
+      "total_price": 420.0,
+      "confidence": 0.71
+    },
+    {
+      "name": "Sparkling Water",
+      "quantity": 1.0,
+      "unit_price": 90.0,
+      "total_price": 90.0,
+      "confidence": 0.68
+    }
+  ],
+  "subtotal": 1390.0,
+  "taxes": {
+    "cgst": 34.75,
+    "sgst": 34.75,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 69.5,
+    "confidence": 0.75
+  },
+  "service_charge": 139.0,
+  "discount": 0.0,
+  "tip": 0.0,
+  "round_off": 0.5,
+  "printed_total": 1599.0,
+  "overall_confidence": 0.76,
+  "image_path": "tests/test_dataset/images/B01.jpg"
+}

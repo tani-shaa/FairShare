@@ -1,0 +1,56 @@
+{
+  "test_id": "B06",
+  "title": "Dual-Script Bilingual Receipt (English + Hindi)",
+  "condition": "dual_script",
+  "description": "Item names printed with Devanagari Hindi headers and English transliteration.",
+  "restaurant_name": "शाही दावत (Shahi Dawat)",
+  "bill_number": "SD-4491",
+  "date": "2026-09-01",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "पनीर टिक्का / Paneer Tikka",
+      "quantity": 1.0,
+      "unit_price": 310.0,
+      "total_price": 310.0,
+      "confidence": 0.89
+    },
+    {
+      "name": "दाल तड़का / Dal Tadka",
+      "quantity": 1.0,
+      "unit_price": 220.0,
+      "total_price": 220.0,
+      "confidence": 0.86
+    },
+    {
+      "name": "मिस्री रोटी / Missi Roti",
+      "quantity": 4.0,
+      "unit_price": 35.0,
+      "total_price": 140.0,
+      "confidence": 0.84
+    },
+    {
+      "name": "गुलाब जामुन / Gulab Jamun (2 pcs)",
+      "quantity": 2.0,
+      "unit_price": 60.0,
+      "total_price": 120.0,
+      "confidence": 0.92
+    }
+  ],
+  "subtotal": 790.0,
+  "taxes": {
+    "cgst": 19.75,
+    "sgst": 19.75,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 39.5,
+    "confidence": 0.88
+  },
+  "service_charge": 39.5,
+  "discount": 0.0,
+  "tip": 0.0,
+  "round_off": 0.0,
+  "printed_total": 869.0,
+  "overall_confidence": 0.87,
+  "image_path": "tests/test_dataset/images/B06.jpg"
+}

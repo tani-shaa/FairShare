@@ -1,0 +1,563 @@
+{
+  "1": {
+    "bill_id": 1,
+    "condition": "normal",
+    "restaurant": "THE URBAN SPICE",
+    "bill_no": 14056,
+    "date": "10-09-2025 19:42",
+    "items": [
+      {
+        "name": "Margherita Pizza",
+        "quantity": 1,
+        "unit_price": 350,
+        "amount": 350
+      },
+      {
+        "name": "Pasta Alfredo",
+        "quantity": 1,
+        "unit_price": 320,
+        "amount": 320
+      },
+      {
+        "name": "Garlic Bread",
+        "quantity": 1,
+        "unit_price": 120,
+        "amount": 120
+      },
+      {
+        "name": "Coke",
+        "quantity": 1,
+        "unit_price": 80,
+        "amount": 80
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 21.75
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 21.75
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 43.5
+      }
+    ],
+    "verified_total": 957.0,
+    "printed_total": 957.0,
+    "correct_total": 957.0
+  },
+  "2": {
+    "bill_id": 2,
+    "condition": "dim light",
+    "restaurant": "CAFE MOCHA",
+    "bill_no": 87,
+    "date": "12-09-2025 20:15",
+    "items": [
+      {
+        "name": "Cold Coffee",
+        "quantity": 2,
+        "unit_price": 150,
+        "amount": 300
+      },
+      {
+        "name": "French Fries",
+        "quantity": 1,
+        "unit_price": 120,
+        "amount": 120
+      },
+      {
+        "name": "Veg Burger",
+        "quantity": 1,
+        "unit_price": 180,
+        "amount": 180
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 15.0
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 15.0
+      }
+    ],
+    "verified_total": 630.0,
+    "printed_total": 630.0,
+    "correct_total": 630.0
+  },
+  "3": {
+    "bill_id": 3,
+    "condition": "crumpled",
+    "restaurant": "BIRYANI BLUES",
+    "bill_no": 7721,
+    "date": "15-09-2025 13:28",
+    "items": [
+      {
+        "name": "Chicken Biryani",
+        "quantity": 2,
+        "unit_price": 280,
+        "amount": 560
+      },
+      {
+        "name": "Raita",
+        "quantity": 1,
+        "unit_price": 60,
+        "amount": 60
+      },
+      {
+        "name": "Masala Coke",
+        "quantity": 1,
+        "unit_price": 50,
+        "amount": 50
+      }
+    ],
+    "charges": [
+      {
+        "name": "GST (5%)",
+        "amount": 33.5
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 33.5
+      }
+    ],
+    "verified_total": 737.0,
+    "printed_total": 737.0,
+    "correct_total": 737.0
+  },
+  "4": {
+    "bill_id": 4,
+    "condition": "steep angle",
+    "restaurant": "THE DAILY GRIND",
+    "bill_no": 5512,
+    "date": "16-09-2025 17:22",
+    "items": [
+      {
+        "name": "Latte",
+        "quantity": 1,
+        "unit_price": 160,
+        "amount": 160
+      },
+      {
+        "name": "Iced Americano",
+        "quantity": 1,
+        "unit_price": 140,
+        "amount": 140
+      },
+      {
+        "name": "Veg Sandwich",
+        "quantity": 1,
+        "unit_price": 140,
+        "amount": 140
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 11.0
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 11.0
+      }
+    ],
+    "verified_total": 462.0,
+    "printed_total": 462.0,
+    "correct_total": 462.0
+  },
+  "5": {
+    "bill_id": 5,
+    "condition": "faded thermal",
+    "restaurant": "HOTEL SAROVAR",
+    "bill_no": 665,
+    "date": "17-09-2025 21:03",
+    "items": [
+      {
+        "name": "Paneer Tikka",
+        "quantity": 1,
+        "unit_price": 260,
+        "amount": 260
+      },
+      {
+        "name": "Tandoori Roti",
+        "quantity": 3,
+        "unit_price": 40,
+        "amount": 120
+      },
+      {
+        "name": "Dal Tadka",
+        "quantity": 1,
+        "unit_price": 180,
+        "amount": 180
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 14.0
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 14.0
+      }
+    ],
+    "verified_total": 588.0,
+    "printed_total": 588.0,
+    "correct_total": 588.0
+  },
+  "6": {
+    "bill_id": 6,
+    "condition": "handwriting",
+    "restaurant": "SPICE JUNCTION",
+    "bill_no": 4582,
+    "date": "18-09-2025 18:20",
+    "items": [
+      {
+        "name": "Veg Thali",
+        "quantity": 2,
+        "unit_price": 180,
+        "amount": 360
+      },
+      {
+        "name": "Paneer Tikka",
+        "quantity": 1,
+        "unit_price": 220,
+        "amount": 220
+      },
+      {
+        "name": "Lassi",
+        "quantity": 2,
+        "unit_price": 60,
+        "amount": 120
+      },
+      {
+        "name": "Roti",
+        "quantity": 1,
+        "unit_price": 80,
+        "amount": 80
+      }
+    ],
+    "charges": [
+      {
+        "name": "GST (5%)",
+        "amount": 37.0
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 37.0
+      }
+    ],
+    "verified_total": 854.0,
+    "printed_total": 854.0,
+    "correct_total": 854.0
+  },
+  "7": {
+    "bill_id": 7,
+    "condition": "two scripts",
+    "restaurant": "SHREE GANESH RESTAURANT",
+    "bill_no": 2210,
+    "date": "19-09-2025 20:05",
+    "items": [
+      {
+        "name": "Paneer Butter Masala",
+        "quantity": 1,
+        "unit_price": 280,
+        "amount": 280
+      },
+      {
+        "name": "Roti",
+        "quantity": 2,
+        "unit_price": 30,
+        "amount": 60
+      },
+      {
+        "name": "Coca Cola",
+        "quantity": 1,
+        "unit_price": 60,
+        "amount": 60
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 11.5
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 11.5
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 23.0
+      }
+    ],
+    "verified_total": 446.0,
+    "printed_total": 506.0,
+    "correct_total": 506.0
+  },
+  "8": {
+    "bill_id": 8,
+    "condition": "long receipt / two photos",
+    "restaurant": "FOOD COURT",
+    "bill_no": 7654,
+    "date": "20-09-2025 12:11",
+    "items": [
+      {
+        "name": "Spring Rolls",
+        "quantity": 1,
+        "unit_price": 180,
+        "amount": 180
+      },
+      {
+        "name": "Veg Noodles",
+        "quantity": 1,
+        "unit_price": 220,
+        "amount": 220
+      },
+      {
+        "name": "Fried Rice",
+        "quantity": 1,
+        "unit_price": 200,
+        "amount": 200
+      },
+      {
+        "name": "Manchurian",
+        "quantity": 1,
+        "unit_price": 180,
+        "amount": 180
+      },
+      {
+        "name": "Ice Tea",
+        "quantity": 1,
+        "unit_price": 140,
+        "amount": 140
+      },
+      {
+        "name": "Paneer Chilli",
+        "quantity": 1,
+        "unit_price": 260,
+        "amount": 260
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 23.0
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 23.0
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 60.0
+      }
+    ],
+    "verified_total": 1286.0,
+    "printed_total": 1286.0,
+    "correct_total": 1286.0,
+    "input_images": [
+      "bill_08_photo_1.png",
+      "bill_08_photo_2.png"
+    ]
+  },
+  "9": {
+    "bill_id": 9,
+    "condition": "wrong printed total",
+    "restaurant": "ROYAL SPICE",
+    "bill_no": 6621,
+    "date": "22-09-2025 13:15",
+    "items": [
+      {
+        "name": "Chicken Biryani",
+        "quantity": 1,
+        "unit_price": 320,
+        "amount": 320
+      },
+      {
+        "name": "Paneer Tikka",
+        "quantity": 1,
+        "unit_price": 280,
+        "amount": 280
+      },
+      {
+        "name": "Butter Naan",
+        "quantity": 2,
+        "unit_price": 60,
+        "amount": 120
+      },
+      {
+        "name": "Masala Tea",
+        "quantity": 1,
+        "unit_price": 50,
+        "amount": 50
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 19.25
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 19.25
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 38.5
+      }
+    ],
+    "verified_total": 847.0,
+    "printed_total": 950.0,
+    "correct_total": 827.0,
+    "note": "Deliberately incorrect printed total: ₹950.00. Correct arithmetic total: ₹827.00."
+  },
+  "10": {
+    "bill_id": 10,
+    "condition": "item discount",
+    "restaurant": "PIZZA HUT",
+    "bill_no": 9032,
+    "date": "23-09-2025 19:10",
+    "items": [
+      {
+        "name": "Farmhouse Pizza",
+        "quantity": 1,
+        "unit_price": 450,
+        "amount": 450
+      },
+      {
+        "name": "Garlic Bread",
+        "quantity": 1,
+        "unit_price": 150,
+        "amount": 150
+      },
+      {
+        "name": "Coke",
+        "quantity": 2,
+        "unit_price": 80,
+        "amount": 160
+      }
+    ],
+    "charges": [
+      {
+        "name": "Discount (-10%)",
+        "amount": -76.0
+      },
+      {
+        "name": "CGST (2.5%)",
+        "amount": 17.1
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 17.1
+      }
+    ],
+    "verified_total": 718.2,
+    "printed_total": 718.2,
+    "correct_total": 718.2
+  },
+  "11": {
+    "bill_id": 11,
+    "condition": "CGST + SGST + service",
+    "restaurant": "THE BLUE DOOR",
+    "bill_no": 1173,
+    "date": "24-09-2025 21:36",
+    "items": [
+      {
+        "name": "Grilled Fish",
+        "quantity": 1,
+        "unit_price": 420,
+        "amount": 420
+      },
+      {
+        "name": "Caesar Salad",
+        "quantity": 1,
+        "unit_price": 280,
+        "amount": 280
+      },
+      {
+        "name": "Mocktail",
+        "quantity": 2,
+        "unit_price": 120,
+        "amount": 240
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (9%)",
+        "amount": 84.6
+      },
+      {
+        "name": "SGST (9%)",
+        "amount": 84.6
+      },
+      {
+        "name": "Service Charge (10%)",
+        "amount": 94.0
+      }
+    ],
+    "verified_total": 1203.2,
+    "printed_total": 1483.2,
+    "correct_total": 1483.2
+  },
+  "12": {
+    "bill_id": 12,
+    "condition": "noisy background",
+    "restaurant": "THE FOOD STREET",
+    "bill_no": 9520,
+    "date": "26-09-2025 18:47",
+    "items": [
+      {
+        "name": "Veg Burger",
+        "quantity": 1,
+        "unit_price": 180,
+        "amount": 180
+      },
+      {
+        "name": "Pani Puri",
+        "quantity": 1,
+        "unit_price": 120,
+        "amount": 120
+      },
+      {
+        "name": "Cold Coffee",
+        "quantity": 2,
+        "unit_price": 140,
+        "amount": 280
+      },
+      {
+        "name": "Chocolate Shake",
+        "quantity": 1,
+        "unit_price": 160,
+        "amount": 160
+      },
+      {
+        "name": "Cheese Pizza",
+        "quantity": 1,
+        "unit_price": 350,
+        "amount": 350
+      }
+    ],
+    "charges": [
+      {
+        "name": "CGST (2.5%)",
+        "amount": 23.75
+      },
+      {
+        "name": "SGST (2.5%)",
+        "amount": 23.75
+      },
+      {
+        "name": "Service Charge (5%)",
+        "amount": 55.0
+      }
+    ],
+    "verified_total": 1192.5,
+    "printed_total": 1112.5,
+    "correct_total": 1112.5
+  }
+}

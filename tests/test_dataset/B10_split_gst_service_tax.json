@@ -1,0 +1,56 @@
+{
+  "test_id": "B10",
+  "title": "Split CGST (2.5%) + SGST (2.5%) + 10% Service Charge",
+  "condition": "split_taxes",
+  "description": "Exemplary standard Indian restaurant receipt format with distinct tax heads.",
+  "restaurant_name": "Punjab Grill Signature",
+  "bill_number": "PG-2091",
+  "date": "2026-09-01",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Murgh Makhani (Butter Chicken)",
+      "quantity": 1.0,
+      "unit_price": 545.0,
+      "total_price": 545.0,
+      "confidence": 0.96
+    },
+    {
+      "name": "Garlic Naan Basket",
+      "quantity": 2.0,
+      "unit_price": 120.0,
+      "total_price": 240.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Subz Dum Biryani",
+      "quantity": 1.0,
+      "unit_price": 425.0,
+      "total_price": 425.0,
+      "confidence": 0.95
+    },
+    {
+      "name": "Kesar Pista Kulfi",
+      "quantity": 2.0,
+      "unit_price": 150.0,
+      "total_price": 300.0,
+      "confidence": 0.97
+    }
+  ],
+  "subtotal": 1510.0,
+  "taxes": {
+    "cgst": 37.75,
+    "sgst": 37.75,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 75.5,
+    "confidence": 0.96
+  },
+  "service_charge": 151.0,
+  "discount": 0.0,
+  "tip": 0.0,
+  "round_off": 0.5,
+  "printed_total": 1737.0,
+  "overall_confidence": 0.96,
+  "image_path": "tests/test_dataset/images/B10.jpg"
+}

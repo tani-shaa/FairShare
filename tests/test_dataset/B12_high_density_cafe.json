@@ -1,0 +1,126 @@
+{
+  "test_id": "B12",
+  "title": "High Density Cafe Bill (14 Items)",
+  "condition": "high_density_items",
+  "description": "Busy cafe receipt with many small itemized beverages, pastries, and snacks.",
+  "restaurant_name": "Artisan Coffee House",
+  "bill_number": "ACH-3390",
+  "date": "2026-09-06",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Cappuccino (Double Shot)",
+      "quantity": 2.0,
+      "unit_price": 180.0,
+      "total_price": 360.0,
+      "confidence": 0.95
+    },
+    {
+      "name": "Flat White",
+      "quantity": 1.0,
+      "unit_price": 190.0,
+      "total_price": 190.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Vanilla Latte (Oat Milk)",
+      "quantity": 1.0,
+      "unit_price": 230.0,
+      "total_price": 230.0,
+      "confidence": 0.92
+    },
+    {
+      "name": "Iced Americano",
+      "quantity": 2.0,
+      "unit_price": 160.0,
+      "total_price": 320.0,
+      "confidence": 0.96
+    },
+    {
+      "name": "Almond Croissant",
+      "quantity": 2.0,
+      "unit_price": 170.0,
+      "total_price": 340.0,
+      "confidence": 0.93
+    },
+    {
+      "name": "Blueberry Cheesecake Slice",
+      "quantity": 1.0,
+      "unit_price": 260.0,
+      "total_price": 260.0,
+      "confidence": 0.95
+    },
+    {
+      "name": "Avocado Sourdough Toast",
+      "quantity": 1.0,
+      "unit_price": 340.0,
+      "total_price": 340.0,
+      "confidence": 0.91
+    },
+    {
+      "name": "Grilled Cheese Sandwich",
+      "quantity": 1.0,
+      "unit_price": 220.0,
+      "total_price": 220.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Cold Brew Tonic",
+      "quantity": 1.0,
+      "unit_price": 210.0,
+      "total_price": 210.0,
+      "confidence": 0.93
+    },
+    {
+      "name": "Matcha Latte",
+      "quantity": 1.0,
+      "unit_price": 240.0,
+      "total_price": 240.0,
+      "confidence": 0.92
+    },
+    {
+      "name": "Chocolate Chip Cookie",
+      "quantity": 3.0,
+      "unit_price": 90.0,
+      "total_price": 270.0,
+      "confidence": 0.95
+    },
+    {
+      "name": "Banana Walnut Bread",
+      "quantity": 1.0,
+      "unit_price": 150.0,
+      "total_price": 150.0,
+      "confidence": 0.9
+    },
+    {
+      "name": "Sparkling Apple Cooler",
+      "quantity": 1.0,
+      "unit_price": 190.0,
+      "total_price": 190.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Still Water (500ml)",
+      "quantity": 2.0,
+      "unit_price": 40.0,
+      "total_price": 80.0,
+      "confidence": 0.97
+    }
+  ],
+  "subtotal": 3400.0,
+  "taxes": {
+    "cgst": 85.0,
+    "sgst": 85.0,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 170.0,
+    "confidence": 0.96
+  },
+  "service_charge": 170.0,
+  "discount": 0.0,
+  "tip": 50.0,
+  "round_off": 0.0,
+  "printed_total": 3790.0,
+  "overall_confidence": 0.95,
+  "image_path": "tests/test_dataset/images/B12.jpg"
+}

@@ -1,0 +1,56 @@
+{
+  "test_id": "B05",
+  "title": "Handwritten Tip & Waiter Notes",
+  "condition": "handwritten_notes",
+  "description": "Printed bill with blue ballpoint handwriting: '+150 Tip (Thanks!)' and crossed out discount.",
+  "restaurant_name": "Coast & Co. Seafood Grill",
+  "bill_number": "CC-8830",
+  "date": "2026-09-02",
+  "currency": "₹",
+  "items": [
+    {
+      "name": "Butter Garlic Prawns",
+      "quantity": 1.0,
+      "unit_price": 580.0,
+      "total_price": 580.0,
+      "confidence": 0.91
+    },
+    {
+      "name": "Goan Fish Curry",
+      "quantity": 1.0,
+      "unit_price": 490.0,
+      "total_price": 490.0,
+      "confidence": 0.88
+    },
+    {
+      "name": "Steamed Rice",
+      "quantity": 2.0,
+      "unit_price": 110.0,
+      "total_price": 220.0,
+      "confidence": 0.94
+    },
+    {
+      "name": "Fresh Lime Soda (Sweet/Salt)",
+      "quantity": 2.0,
+      "unit_price": 90.0,
+      "total_price": 180.0,
+      "confidence": 0.89
+    }
+  ],
+  "subtotal": 1470.0,
+  "taxes": {
+    "cgst": 36.75,
+    "sgst": 36.75,
+    "vat": 0.0,
+    "other_tax": 0.0,
+    "total_tax": 73.5,
+    "confidence": 0.9
+  },
+  "service_charge": 147.0,
+  "discount": 0.0,
+  "tip": 150.0,
+  "round_off": 0.5,
+  "printed_total": 1841.0,
+  "overall_confidence": 0.86,
+  "image_path": "tests/test_dataset/images/B05.jpg"
+}
