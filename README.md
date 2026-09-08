@@ -90,6 +90,8 @@ ITgeeks/
 
 Each test case includes ground truth JSON and a corresponding synthetic receipt image with a visual effect matching the condition (brightness reduction, crease lines, perspective skew, grayscale fading, etc.).
 
+**Important:** These 12 bill images are synthetically generated using Pillow from the ground truth JSON data. They are rendered programmatically to simulate real-world capture conditions — they are not photographs of actual restaurant bills. The purpose is reproducible, deterministic testing of the extraction and math pipeline across known edge cases. To test with real photographs, replace the images in `tests/test_dataset/images/` with your own and run the benchmark.
+
 ---
 
 ## Setup
@@ -103,8 +105,8 @@ Each test case includes ground truth JSON and a corresponding synthetic receipt 
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd ITgeeks
+git clone https://github.com/tani-shaa/FairShare.git
+cd FairShare
 
 # Install dependencies
 pip install -r backend/requirements.txt
@@ -169,6 +171,7 @@ Each image has a visual effect applied that matches its test condition (e.g. B04
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `GEMINI_API_KEY` | No | Enables AI receipt extraction. Without it, the app runs in manual entry mode. |
+| `GEMINI_MODEL` | No | Overrides the Gemini model used for extraction. Defaults to `gemini-3.5-flash`. Useful if a specific model is unavailable in your region. |
 
 ---
 
@@ -181,7 +184,8 @@ Each image has a visual effect applied that matches its test condition (e.g. B04
 | pydantic | Data validation and serialisation |
 | python-multipart | Multipart file upload support |
 | python-dotenv | `.env` file loading |
-| google-generativeai | Gemini Vision API client |
+| `google-generativeai` | Gemini Vision API client (legacy SDK, retained for compatibility) |
+| `google-genai` | Gemini Vision API client (current SDK, used for extraction) |
 | pillow | Image optimisation before API call, synthetic image generation |
 | pytest | Test runner |
 | httpx | HTTP client for tests |
