@@ -20,6 +20,10 @@ from backend.engine import validate_bill_math
 
 logger = logging.getLogger("ExtractionLayer")
 
+# Keep the default on a stable model. It is still overrideable for a
+# deployment that has access to a different Gemini model.
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+
 
 EXTRACTION_SYSTEM_PROMPT = """
 You are an expert receipt extraction engine. Analyze the provided receipt image(s) and output a clean, strict JSON object.
@@ -81,7 +85,7 @@ def extract_bill_from_image_bytes(
     
     PERFORMANCE OPTIMIZATIONS:
     - Image compression before API call
-    - Faster model (gemini-2.0-flash-exp)
+    - Current multimodal model (configurable with GEMINI_MODEL)
     - Reduced temperature for faster convergence
     - Timeout handling
     """
@@ -91,12 +95,24 @@ def extract_bill_from_image_bytes(
         try:
             # Optimize image size before sending to API
             optimized_bytes = _optimize_image_for_api(image_bytes, mime_type)
-            return _call_gemini_vision(optimized_bytes, mime_type, api_key)
+            bill = _call_gemini_vision(optimized_bytes, mime_type, api_key)
+            bill.extraction_source = "vision"
+            return bill
         except Exception as e:
-            logger.warning(f"Vision API extraction failed ({str(e)}). Falling back to heuristic/manual mode.")
+            # Keep the actual provider error in server logs, but return a safe,
+            # actionable message to the browser instead of silently showing a
+            # fake receipt as if it had been read successfully.
+            logger.exception("Vision API extraction failed; using manual mode")
+            return _heuristic_fallback_extraction(
+                image_bytes,
+                warning="AI could not read this image. Check the Gemini model/API key, then try uploading again.",
+            )
             
     # Fallback to smart heuristic / template extraction
-    return _heuristic_fallback_extraction(image_bytes)
+    return _heuristic_fallback_extraction(
+        image_bytes,
+        warning="Image reading is not enabled yet. Add GEMINI_API_KEY to enable automatic receipt extraction.",
+    )
 
 
 def _optimize_image_for_api(image_bytes: bytes, mime_type: str) -> bytes:
@@ -149,48 +165,46 @@ def _optimize_image_for_api(image_bytes: bytes, mime_type: str) -> bytes:
 def _call_gemini_vision(image_bytes: bytes, mime_type: str, api_key: str) -> BillData:
     """Calls Gemini Multimodal API to parse receipt image.
     
-    Uses the official google-generativeai SDK which correctly handles
-    both legacy AIza keys and new AQ. auth keys (Sept 2026+).
+    Uses Google's current google-genai SDK. The API key stays server-side;
+    the browser only uploads the image.
     
     PERFORMANCE OPTIMIZATIONS:
-    - Uses gemini-2.0-flash-exp (faster experimental model)
+    - Uses a configurable current multimodal model
     - Lower temperature (0.05) for faster convergence
     - Strict JSON mode for faster parsing
     - Request timeout handling
     """
     try:
-        import google.generativeai as genai
+        from google import genai
+        from google.genai import types
     except ImportError:
         raise RuntimeError(
-            "google-generativeai package not installed. "
-            "Run: pip install google-generativeai"
+            "google-genai package not installed. "
+            "Run: pip install google-genai"
         )
 
-    genai.configure(api_key=api_key)
-    
-    # Use the fastest available Gemini model
-    # gemini-2.0-flash-exp is optimized for speed
-    model = genai.GenerativeModel(
-        model_name="gemini-2.0-flash-exp",  # Faster experimental model
-        generation_config=genai.types.GenerationConfig(
-            response_mime_type="application/json",
-            temperature=0.05,  # Lower temperature = faster, more deterministic
-            top_p=0.95,
-            top_k=40,
-            max_output_tokens=2048,  # Limit output for speed
-        )
+    client = genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(timeout=30_000),
     )
 
     # Build the multimodal prompt: text instruction + image bytes
-    image_part = {"mime_type": "image/jpeg", "data": image_bytes}
+    image_part = types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg")
     
     # Generate with timeout
     logger.info("Calling Gemini Vision API...")
     start_time = __import__('time').time()
     
-    response = model.generate_content(
-        [EXTRACTION_SYSTEM_PROMPT, image_part],
-        request_options={"timeout": 30}  # 30 second timeout
+    response = client.models.generate_content(
+        model=GEMINI_MODEL,
+        contents=[EXTRACTION_SYSTEM_PROMPT, image_part],
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+            temperature=0.05,
+            top_p=0.95,
+            top_k=40,
+            max_output_tokens=2048,
+        ),
     )
     
     elapsed = __import__('time').time() - start_time
@@ -213,37 +227,33 @@ def _call_gemini_vision(image_bytes: bytes, mime_type: str, api_key: str) -> Bil
     return validate_bill_math(bill)
 
 
-def _heuristic_fallback_extraction(image_bytes: bytes) -> BillData:
+def _heuristic_fallback_extraction(
+    image_bytes: bytes,
+    warning: Optional[str] = None,
+) -> BillData:
     """
     Fallback parser when no external AI API key is configured.
     Returns a structured starter template with confidence flags.
     """
-    # Create an initial bill structure that prompts the user to verify/edit
-    items = [
-        LineItem(name="Sample Biryani (Double)", quantity=2.0, unit_price=220.0, total_price=440.0, confidence=0.92),
-        LineItem(name="Butter Naan", quantity=3.0, unit_price=45.0, total_price=135.0, confidence=0.88),
-        LineItem(name="Paneer Butter Masala", quantity=1.0, unit_price=280.0, total_price=280.0, confidence=0.90),
-        LineItem(name="Diet Coke", quantity=1.0, unit_price=40.0, total_price=40.0, confidence=0.95),
-        LineItem(name="Mineral Water", quantity=2.0, unit_price=25.0, total_price=50.0, confidence=0.65), # Low confidence flag
-    ]
-    
-    taxes = TaxBreakdown(cgst=23.63, sgst=23.63, total_tax=47.25, confidence=0.90)
-    
+    # Never invent receipt contents. An empty editable bill is safer than
+    # presenting unrelated sample items as the result of reading the photo.
     bill = BillData(
-        restaurant_name="Grand Spice Kitchen",
-        bill_number="INV-2026-8841",
-        date="2026-09-07",
+        restaurant_name="",
+        bill_number="",
+        date=None,
         currency="₹",
-        items=items,
-        subtotal=945.0,
-        taxes=taxes,
-        service_charge=94.50, # 10%
-        discount=50.0,
+        items=[],
+        subtotal=0.0,
+        taxes=TaxBreakdown(),
+        service_charge=0.0,
+        discount=0.0,
         tip=0.0,
-        round_off=0.25,
-        printed_total=1037.0,
-        overall_confidence=0.84,
-        low_confidence_fields=["Item 'Mineral Water' (Confidence: 65%)"]
+        round_off=0.0,
+        printed_total=0.0,
+        overall_confidence=0.0,
+        low_confidence_fields=["All fields need manual entry"],
+        extraction_source="fallback",
+        extraction_warning=warning,
     )
     
     return validate_bill_math(bill)
